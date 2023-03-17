@@ -18,15 +18,15 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
+app.get("/api", (_, res) => {
+  const date = new Date();
+  res.json({ unix: date.valueOf(), utc: date.toUTCString() });
+});
+
 app.get("/api/:date", (req, res) => {
   const dateReceived = req.params.date;
-  let date;
-
-  if (!dateReceived) {
-    return res.json({ unix: Date.now() });
-  }
-
   const isTimestamp = !isNaN(dateReceived);
+  let date;
 
   if (isTimestamp) {
     date = new Date(Number(dateReceived));
