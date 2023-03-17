@@ -18,12 +18,12 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get("/api/:date", (req, res) => {
+  const date = new Date(req.params.date);
 
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+  const response = { unix: date.valueOf(), utc: date.toUTCString() };
+  res.json(response);
 });
-
 
 
 // listen for requests :)
