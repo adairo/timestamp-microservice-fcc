@@ -19,7 +19,15 @@ app.get("/", function (req, res) {
 });
 
 app.get("/api/:date", (req, res) => {
-  const date = new Date(req.params.date);
+  const dateReceived = req.params.date;
+  const isDateString = /\d{4}-\d{2}-\d{2}/.test(dateReceived);
+  let date;
+
+  if (isDateString) {
+    date = new Date(req.params.date);
+  } else {
+    date = new Date(Number(dateReceived));
+  }
 
   const response = { unix: date.valueOf(), utc: date.toUTCString() };
   res.json(response);
